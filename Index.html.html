@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch AI | AI-Powered Career Guidance Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a5bd7;
+            --secondary: #0f3a9d;
+            --accent: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 22px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7fb 0%, #e3e9f8 100%);
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .secondary-button {
+            background-color: white;
+            color: var(--primary);
+            padding: 10px 22px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+        
+        .secondary-button:hover {
+            background-color: #f0f4ff;
+        }
+        
+        /* Platform Overview */
+        .overview {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 60px;
+            color: var(--secondary);
+        }
+        
+        .section-title span {
+            color: var(--accent);
+        }
+        
+        .overview-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .overview-text {
+            flex: 1;
+        }
+        
+        .overview-text h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .overview-image {
+            flex: 1;
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .overview-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+        }
+        
+        .step-icon {
+            background-color: #e8f0ff;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 28px;
+        }
+        
+        .step h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        /* Demo Form */
+        .demo-form {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 91, 215, 0.1);
+        }
+        
+        .skills-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #e8f0ff;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .skill-tag i {
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .skill-tag i:hover {
+            color: var(--accent);
+        }
+        
+        .add-skill {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        /* Results Section */
+        .results {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .job-match {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .match-percentage {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .skill-gap {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .existing-skill {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .missing-skill {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        /* Team Info */
+        .team-info {
+            padding: 60px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .team-member {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            min-width: 200px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .overview-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 30px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                SkillMatch<span>AI</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#demo">Try Demo</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                </ul>
+            </nav>
+            <a href="#demo" class="cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>From Skills to Jobs: <span>AI-Powered Career Guidance</span> for Rural & Semi-Urban Job Seekers</h1>
+            <p>Our platform analyzes your education and skills, matches them with suitable job roles, and provides personalized skill gap analysis and learning pathways—especially designed for users with limited career guidance resources.</p>
+            <div class="hero-buttons">
+                <a href="#demo" class="cta-button">Try Free Demo</a>
+                <a href="#overview" class="secondary-button">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Overview -->
+    <section id="overview" class="overview">
+        <div class="container">
+            <h2 class="section-title">Our <span>Solution</span> to Skill-Job Mismatch</h2>
+            <div class="overview-content">
+                <div class="overview-text">
+                    <h3>Instead of asking "Which job do you want?", we ask "What do you know, and what should you learn next to get a job?"</h3>
+                    <p>According to PLFS 2022–23, nearly 16% of rural graduates (aged 20–24) are unemployed, mainly due to a mismatch between their skills and industry requirements. Our AI platform addresses this by:</p>
+                    <ul style="margin-top: 20px; padding-left: 20px;">
+                        <li style="margin-bottom: 10px;">Providing <strong>skill-based job matching</strong> with clear gap identification</li>
+                        <li style="margin-bottom: 10px;">Offering <strong>targeted learning guidance</strong> aligned to market demand</li>
+                        <li style="margin-bottom: 10px;">Delivering <strong>region-aware recommendations</strong> for rural job seekers</li>
+                        <li>Improving job readiness and reducing blind applications</li>
+                    </ul>
+                </div>
+                <div class="overview-image">
+                    <i class="fas fa-laptop-code" style="font-size: 120px; color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3>AI Career Path Mentor</h3>
+                    <p>Personalized career navigation with rural-friendly interface</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It <span>Works</span></h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h4>User Input</h4>
+                    <p>Enter your skills, education background, location, and career preferences into our simple form.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Skill Understanding</h4>
+                    <p>Our AI evaluates your actual skill levels, not just keywords, for accurate assessment.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Market Matching</h4>
+                    <p>System compares your profile with current job requirements and generates match percentages.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>Personalized Output</h4>
+                    <p>Get top 5-10 job roles ranked by match score, skill gap insights, and career guidance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Form -->
+    <section id="demo" class="demo-form">
+        <div class="container">
+            <h2 class="section-title">Try Our <span>AI Career Match</span> Demo</h2>
+            <div class="form-container">
+                <form id="career-form">
+                    <div class="form-group">
+                        <label for="education">Education Level</label>
+                        <select id="education" class="form-control">
+                            <option value="">Select your highest education</option>
+                            <option value="highschool">High School</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location Type</label>
+                        <select id="location" class="form-control">
+                            <option value="">Select your location type</option>
+                            <option value="rural">Rural Area</option>
+                            <option value="semi-urban">Semi-Urban Area</option>
+                            <option value="urban">Urban Area</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Your Skills (Add at least 3 skills)</label>
+                        <div class="skills-input" id="skills-container">
+                            <div class="skill-tag">HTML <i class="fas fa-times remove-skill"></i></div>
+                            <div class="skill-tag">Communication <i class="fas fa-times remove-skill"></i></div>
+                            <div class="skill-tag">MS Office <i class="fas fa-times remove-skill"></i></div>
+                        </div>
+                        <div class="add-skill">
+                            <input type="text" id="new-skill" class="form-control" placeholder="Add a skill (e.g., Python, Digital Marketing)">
+                            <button type="button" id="add-skill-btn" class="cta-button">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="career-interest">Career Interest Area</label>
+                        <select id="career-interest" class="form-control">
+                            <option value="">Select your area of interest</option>
+                            <option value="it">Information Technology</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="education">Education</option>
+                            <option value="agriculture">Agriculture & Farming</option>
+                            <option value="business">Business & Sales</option>
+                            <option value="skilled-trades">Skilled Trades</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="cta-button" style="width: 100%; padding: 15px; font-size: 18px;">Analyze My Career Match</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results">
+        <div class="container">
+            <h2 class="section-title">Your <span>Personalized</span> Career Matches</h2>
+            
+            <div class="job-match">
+                <div class="match-header">
+                    <h3>Frontend Developer</h3>
+                    <div class="match-percentage">78% Match</div>
+                </div>
+                <p><strong>Regional Demand:</strong> High in semi-urban areas with growing IT hubs</p>
+                <p><strong>Expected Learning Time:</strong> 3-4 months to bridge skill gaps</p>
+                
+                <div class="skill-gap">
+                    <p><strong>Skill Gap Analysis:</strong></p>
+                    <div class="skill-list">
+                        <div class="existing-skill">HTML</div>
+                        <div class="existing-skill">Communication</div>
+                        <div class="missing-skill">JavaScript</div>
+                        <div class="missing-skill">React.js</div>
+                        <div class="missing-skill">CSS Frameworks</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="cta-button">View Learning Path</button>
+                    <button class="secondary-button">See Similar Roles</button>
+                </div>
+            </div>
+            
+            <div class="job-match">
+                <div class="match-header">
+                    <h3>Digital Marketing Specialist</h3>
+                    <div class="match-percentage">65% Match</div>
+                </div>
+                <p><strong>Regional Demand:</strong> Moderate, with opportunities for remote work</p>
+                <p><strong>Expected Learning Time:</strong> 2-3 months to bridge skill gaps</p>
+                
+                <div class="skill-gap">
+                    <p><strong>Skill Gap Analysis:</strong></p>
+                    <div class="skill-list">
+                        <div class="existing-skill">Communication</div>
+                        <div class="existing-skill">MS Office</div>
+                        <div class="missing-skill">SEO Fundamentals</div>
+                        <div class="missing-skill">Social Media Marketing</div>
+                        <div class="missing-skill">Google Analytics</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="cta-button">View Learning Path</button>
+                    <button class="secondary-button">See Similar Roles</button>
+                </div>
+            </div>
+            
+            <div class="job-match">
+                <div class="match-header">
+                    <h3>IT Support Specialist</h3>
+                    <div class="match-percentage">72% Match</div>
+                </div>
+                <p><strong>Regional Demand:</strong> High in rural banking and government sectors</p>
+                <p><strong>Expected Learning Time:</strong> 1-2 months to bridge skill gaps</p>
+                
+                <div class="skill-gap">
+                    <p><strong>Skill Gap Analysis:</strong></p>
+                    <div class="skill-list">
+                        <div class="existing-skill">MS Office</div>
+                        <div class="existing-skill">Communication</div>
+                        <div class="missing-skill">Networking Basics</div>
+                        <div class="missing-skill">Hardware Troubleshooting</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="cta-button">View Learning Path</button>
+                    <button class="secondary-button">See Similar Roles</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Info -->
+    <section id="team" class="team-info">
+        <div class="container">
+            <h2 class="section-title">Our <span>Team</span></h2>
+            <p style="max-width: 800px; margin: 0 auto 30px;">Team Techno-Bluds from Sethu Institute of Technology, an autonomous institution accredited with "A++" grade by NAAC.</p>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <h3>Shreehan M</h3>
+                    <p>Roll No: 23AM064</p>
+                    <p style="color: var(--gray); margin-top: 10px;">AI & Backend Developer</p>
+                </div>
+                <div class="team-member">
+                    <h3>Muthu Manikandan M</h3>
+                    <p>Roll No: 23AM054</p>
+                    <p style="color: var(--gray); margin-top: 10px;">Frontend & Data Analysis</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; background-color: #f0f4ff; padding: 20px; border-radius: var(--border-radius); display: inline-block;">
+                <p><strong>Team ID:</strong> ICRT16</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>SkillMatch AI</h4>
+                    <p>An AI-based career guidance platform that analyzes job seeker's education and skills and matches them with suitable job roles with special focus on rural and semi-urban users.</p>
+                    <p>Transforming job search from random applications to structured, skill-based career planning.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Key Features</h4>
+                    <p>✓ Skill-based job matching</p>
+                    <p>✓ Percentage-based readiness scores</p>
+                    <p>✓ Region-aware recommendations</p>
+                    <p>✓ Personalized learning pathways</p>
+                    <p>✓ Rural-friendly interface</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Sethu Institute of Technology</p>
+                    <p>An Autonomous Institution</p>
+                    <p>Accredited with "A++" Grade by NAAC</p>
+                    <p>Team: Techno-Bluds</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 SkillMatch AI - Team Techno-Bluds. All rights reserved.</p>
+                <p>Designed for rural and semi-urban job seekers to bridge the skill-job mismatch gap.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Skill management
+            const skillsContainer = document.getElementById('skills-container');
+            const newSkillInput = document.getElementById('new-skill');
+            const addSkillBtn = document.getElementById('add-skill-btn');
+            
+            // Remove skill event delegation
+            skillsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-skill')) {
+                    e.target.parentElement.remove();
+                }
+            });
+            
+            // Add new skill
+            addSkillBtn.addEventListener('click', function() {
+                const skillText = newSkillInput.value.trim();
+                if (skillText) {
+                    const skillTag = document.createElement('div');
+                    skillTag.className = 'skill-tag';
+                    skillTag.innerHTML = `${skillText} <i class="fas fa-times remove-skill"></i>`;
+                    skillsContainer.appendChild(skillTag);
+                    newSkillInput.value = '';
+                }
+            });
+            
+            // Form submission
+            const careerForm = document.getElementById('career-form');
+            const resultsSection = document.getElementById('results');
+            
+            careerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                const education = document.getElementById('education').value;
+                const location = document.getElementById('location').value;
+                const careerInterest = document.getElementById('career-interest').value;
+                const skills = skillsContainer.querySelectorAll('.skill-tag');
+                
+                if (!education || !location || !careerInterest || skills.length < 3) {
+                    alert('Please fill all fields and add at least 3 skills.');
+                    return;
+                }
+                
+                // Show results with animation
+                resultsSection.classList.add('active');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Simulate AI processing
+                const submitButton = careerForm.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Analyzing your profile...';
+                submitButton.disabled = true;
+                
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }, 1500);
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a, .hero-buttons a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
